@@ -43,15 +43,22 @@ ostream& operator<<(ostream& output, const Puzzle& puzzle){
       for (int col = 0; col < puzzle.MAXSQUARES_; col++){
          //output the vertical dividers:
          if(col == 2 || col == 5){
-            output << " " << puzzle.get(row, col);
+            output << puzzle.get(row, col);
             output << "|";
          }
          else if (col == 3 || col == 6){
             output << puzzle.get(row, col);           
          }
+         else if (col == 0){
+            output << " " << puzzle.get(row, col);
+         }
          else if (col == 8){
+            output << puzzle.get(row, col) << " " ;
+         }
+         else{
             output << " " << puzzle.get(row, col) << " " ;    
          }
+
       }//end inner for loop
 
       //output the horizontal dividers

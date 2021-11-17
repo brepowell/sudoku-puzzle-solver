@@ -16,7 +16,9 @@ int main(int argc, char const *argv[])
 //./test
 
    Puzzle sudoku;
-
+   cout << "Does set() work? (true is 1, false is 0): " 
+        << sudoku.set(0,0,5) <<endl; //should return 1
+        
    //test the output operator overload to see the puzzle
    cout << sudoku;
 
