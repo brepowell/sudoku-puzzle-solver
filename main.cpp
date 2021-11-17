@@ -16,17 +16,7 @@ int main(int argc, char const *argv[])
 //./test
 
    Puzzle sudoku;
-   //test the getters and setters for the Puzzle class
-   cout << "Does set() work? (true is 1, false is 0): " 
-        << sudoku.set(0,0,5) <<endl; //should return 1
-   cout << "Does get() work? (the value is 5): " 
-        << sudoku.get(0,0) << endl; //should return 5
-   cout << "What is the puzzle size? " 
-        << sudoku.size() <<endl; //should return 81
-   cout << "How many squares are empty? " 
-        << sudoku.numEmpty() <<endl; //should return 81
 
-/*
    //test the check-for-duplicates functions:
    cout << "Is the value 5 in the column 0? " 
         << sudoku.isInColumn(0,5)  <<endl; //should return true;
@@ -40,7 +30,6 @@ int main(int argc, char const *argv[])
         << sudoku.isInRegion(0,0,5) <<endl; //should return true;
    cout << "Is the value 5 in the middle region? " 
         << sudoku.isInRegion(5,5,5)  <<endl; //should return false;
-*/
 
 
 /*
@@ -83,6 +72,17 @@ int main(int argc, char const *argv[])
         << s.setValue(5) <<endl; //should return 0
    cout << "What value does the square contain? " 
         << s.getValue() <<endl; //should return 8
+
+
+   //test the getters and setters for the Puzzle class
+   cout << "Does set() work? (true is 1, false is 0): " 
+        << sudoku.set(0,0,5) <<endl; //should return 1
+   cout << "Does get() work? (the value is 5): " 
+        << sudoku.get(0,0) << endl; //should return 5
+   cout << "What is the puzzle size? " 
+        << sudoku.size() <<endl; //should return 81
+   cout << "How many squares are empty? " 
+        << sudoku.numEmpty() <<endl; //should return 80
 */
 
 }//end main
