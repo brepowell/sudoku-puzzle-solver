@@ -74,19 +74,6 @@ bool findEmpty(int &row, int &col);
  @return  True if Sudoku is solved, or false if not.*/
 bool solve(int row = 0, int col = 0);
 
-private:
-//The maximum number of squares for each side of the board
-const int MAXSQUARES_ = 9;
-
-//The initial puzzle size (based on input from user)
-int puzzleSize_;
-
-//The current number of squares that are empty
-int numEmptySquares_;
-
-//A 9x9 array that holds Square objects
-Square puzzleBoard_[9][9];
-
 /** Check if the value exists already in the row
  @param int row, int the newValue
  @return  True if the value exists in the row, or false if not.*/
@@ -101,6 +88,20 @@ bool isInColumn(int col, int newValue) const;
  @param int column, int the newValue
  @return  True if the value exists in the column, or false if not.*/
 bool isInRegion(int row, int col, int newValue) const;
+
+private:
+//The maximum number of squares for each side of the board
+const int MAXSQUARES_ = 9;
+
+//The initial puzzle size (based on input from user)
+int puzzleSize_;
+
+//The current number of squares that are empty
+int numEmptySquares_;
+
+//A 9x9 array that holds Square objects
+Square puzzleBoard_[9][9];
+
 
 };//end Puzzle class
 #endif
