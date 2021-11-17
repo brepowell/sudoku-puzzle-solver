@@ -72,7 +72,7 @@ bool findEmpty(int &row, int &col);
  @post  If successful, the Sudoku will be solved 
   and all Squares will hold a value between 1 and 9
  @return  True if Sudoku is solved, or false if not.*/
-bool solve();
+bool solve(int row = 0, int col = 0);
 
 private:
 //The maximum number of squares for each side of the board

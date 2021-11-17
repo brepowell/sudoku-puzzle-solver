@@ -12,8 +12,8 @@ using namespace std;
    This constructor will create a Sudoku puzzle board
    that holds 9-by-9 Square objects.*/
 Puzzle::Puzzle() 
-   :  puzzleSize_(MAXSQUARES_ * MAXSQUARES_), 
-   numEmptySquares_ (MAXSQUARES_ * MAXSQUARES_)
+   :  puzzleSize_(9*9), 
+   numEmptySquares_ (9*9)
 {
    //puzzleSize decreases as fixed numbers are added
    //numEmptySquares decreases as fixed numbers are added
@@ -82,7 +82,7 @@ istream& operator>>(istream& input, Puzzle& puzzle){
             newValue = c - '0'; //cast the char into an int
             
             //set will check if the entry has no conflicts as the value is added
-            if(puzzle.set(row, col, newValue){
+            if(puzzle.set(row, col, newValue)){
                if (newValue != 0){
                   //These are the fixed squares for the puzzle
                   puzzle.puzzleBoard_[row][col].setFixed(true);
@@ -101,8 +101,6 @@ istream& operator>>(istream& input, Puzzle& puzzle){
    }//end outer for
   return input;
 }//end istream operator overload
-
-
 
 /** Return the value (0 - 9) contained inside a Square object
   Use the (row, column) location to find the object in the Puzzle array
@@ -132,14 +130,14 @@ bool Puzzle::set(int row, int col, int newValue){
 
    //If the Square is being reset to 0, increase the number of empty squares
    else if (newValue == 0){
-      if (numEmpty() < MAXSQUARES_ * MAXSQUARES_)
+      if (numEmpty() < (MAXSQUARES_ * MAXSQUARES_))
          numEmptySquares_++; //This value should not increase beyond 81
       puzzleBoard_[row][col].setValue(0);
       return true;
    }
 
    //Check if the value exists in the row, column, or region - return false
-   else if (isInRow(row, newValue || isInColumn(col, newValue) || isInRegion(row, col, newValue){
+   else if (isInRow(row, newValue) || isInColumn(col, newValue) || isInRegion(row, col, newValue)){
       return false;
    }
 
@@ -157,7 +155,7 @@ bool Puzzle::set(int row, int col, int newValue){
  @return  True if the value exists in the row, or false if not.*/
 bool Puzzle::isInRow(int row, int newValue) const{
    for (int col = 0; col < MAXSQUARES_; col++){
-      if (puzzleBoard_.get(row, col)  == newValue)
+      if (get(row, col) == newValue)
          return true;
    }
    return false;
@@ -168,7 +166,7 @@ bool Puzzle::isInRow(int row, int newValue) const{
  @return  True if the value exists in the column, or false if not.*/
 bool Puzzle::isInColumn(int col, int newValue) const{
    for (int row = 0; row < MAXSQUARES_; row++){
-      if (puzzleBoard_.get(row, col) == newValue)
+      if (get(row, col) == newValue)
          return true;
    }
    return false;
@@ -180,14 +178,16 @@ bool Puzzle::isInColumn(int col, int newValue) const{
 bool Puzzle::isInRegion(int row, int col, int newValue) const{
    //Figure out which region to use - by row
    int startRowRegion = 0; //temp variable for start row
-   if (row >= 3 && row < 6){
+   int startColRegion = 0; //temp variable for start column
+
+   if (row >= 3 && row < 6)
       startRowRegion = 3;
    else if (row >= 6)
       startRowRegion = 6;
 
    //Figure out which region to use - by column
    int startCol = 0; //temp variable for start column
-   if (col >= 3 && col < 6){
+   if (col >= 3 && col < 6)
       startColRegion = 3;
    else if (col >= 6)
       startColRegion = 6;
@@ -195,7 +195,7 @@ bool Puzzle::isInRegion(int row, int col, int newValue) const{
    //Iterate through the region, from start point in upper left corner
    for (int i= 0; i< 3; i++){
       for (int j= 0; j< 3; j++){
-         if (puzzleBoard_.get(i+startRowRegion, j+startColRegion) == newValue){
+         if (get(i+startRowRegion, j+startColRegion) == newValue){
             return true;
          }//end if
       }//end inner for
@@ -212,7 +212,7 @@ bool Puzzle::isInRegion(int row, int col, int newValue) const{
 bool Puzzle::findEmpty(int &row, int &col){
    for (row = 0; row < MAXSQUARES_; row++){
       for (col = 0; col < MAXSQUARES_; col++){
-         if (puzzleBoard_.get(row, col)  == 0)
+         if (get(row, col)  == 0)
             return true;
       }//end inner for
    }//end outer for
@@ -225,7 +225,8 @@ bool Puzzle::findEmpty(int &row, int &col){
  @post  If successful, the Sudoku will be solved 
   and all Squares will hold a value between 1 and 9
  @return  True if Sudoku is solved, or false if not.*/
-bool Puzzle::solve(){
+bool Puzzle::solve(int row = 0, int col = 0){
+
    //If there are no more empty squares, return true
    if (numEmpty() <= 0) 
       return true;
@@ -245,5 +246,3 @@ bool Puzzle::solve(){
    }//end for
    return false;
 }//end solve
-
-
