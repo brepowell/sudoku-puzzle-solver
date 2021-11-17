@@ -3,7 +3,7 @@
 // SID: 0641962
 // Due: 2021 11 24
 
-#include "Square.h"
+//#include "Square.h"
 #include <iostream>
 using namespace std;
 
@@ -13,6 +13,7 @@ int main(int argc, char const *argv[])
 //g++ *.cpp -std=c++11 -g -o test
 //./test
 
+/* TESTS WORKED:
    Square s;
    //test all getters and setters for the Square class
    cout << "Is the Square fixed? (true is 1, false is 0): " 
@@ -29,5 +30,6 @@ int main(int argc, char const *argv[])
         << s.setValue(5) <<endl; //should return 0
    cout << "What value does the square contain? " 
         << s.getValue() <<endl; //should return 8
+*/
 
 }//end main
