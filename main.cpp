@@ -16,19 +16,14 @@ int main(int argc, char const *argv[])
 //./test
 
    Puzzle sudoku;
-   cout << "Does set() work? (true is 1, false is 0): " 
-        << sudoku.set(0,0,5) <<endl; //should return 1
-        
    //test the output operator overload to see the puzzle
    cout << sudoku;
 
-/*
    //test the input operator overload to see if it takes input
    //423751968759683124168249357945362871872915436316478295537194682691827543284536019
    cout << "Enter a valid Sudoku puzzle of 81 number characters (between 0 and 9): " <<endl;
    cin >> sudoku;
    cout << sudoku;
-*/
 
 /*
    //test findEmpty(0,0)
