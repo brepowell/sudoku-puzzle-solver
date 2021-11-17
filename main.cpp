@@ -17,25 +17,10 @@ int main(int argc, char const *argv[])
 
    Puzzle sudoku;
 
-   //test the check-for-duplicates functions:
-   cout << "Is the value 5 in the column 0? " 
-        << sudoku.isInColumn(0,5)  <<endl; //should return true;
-   cout << "Is the value 5 in the column 1? " 
-        << sudoku.isInColumn(1,5)  <<endl; //should return false;
-   cout << "Is the value 5 in the row 0? " 
-        << sudoku.isInRow(0,5)  <<endl; //should return true;
-   cout << "Is the value 5 in the row 1? " 
-        << sudoku.isInRow(1,5) <<endl; //should return false;
-   cout << "Is the value 5 in the first region? " 
-        << sudoku.isInRegion(0,0,5) <<endl; //should return true;
-   cout << "Is the value 5 in the middle region? " 
-        << sudoku.isInRegion(5,5,5)  <<endl; //should return false;
-
-
-/*
    //test the output operator overload to see the puzzle
    cout << sudoku;
 
+/*
    //test the input operator overload to see if it takes input
    //423751968759683124168249357945362871872915436316478295537194682691827543284536019
    cout << "Enter a valid Sudoku puzzle of 81 number characters (between 0 and 9): " <<endl;
@@ -56,6 +41,7 @@ int main(int argc, char const *argv[])
 */
 
 /* TESTS PASSED:
+
    Square s;
    //test all getters and setters for the Square class
    cout << "Is the Square fixed? (true is 1, false is 0): " 
@@ -83,6 +69,22 @@ int main(int argc, char const *argv[])
         << sudoku.size() <<endl; //should return 81
    cout << "How many squares are empty? " 
         << sudoku.numEmpty() <<endl; //should return 80
+
+   //test the check-for-duplicates functions:
+   cout << "Does set() work? (true is 1, false is 0): " 
+        << sudoku.set(0,0,5) <<endl; //should return 1
+   cout << "Is the value 5 in the column 0? " 
+        << sudoku.isInColumn(0,5)  <<endl; //should return true;
+   cout << "Is the value 5 in the column 1? " 
+        << sudoku.isInColumn(1,5)  <<endl; //should return false;
+   cout << "Is the value 5 in the row 0? " 
+        << sudoku.isInRow(0,5)  <<endl; //should return true;
+   cout << "Is the value 5 in the row 1? " 
+        << sudoku.isInRow(1,5) <<endl; //should return false;
+   cout << "Is the value 5 in the first region? " 
+        << sudoku.isInRegion(0,0,5) <<endl; //should return true;
+   cout << "Is the value 5 in the middle region? " 
+        << sudoku.isInRegion(5,5,5)  <<endl; //should return false;
 */
 
 }//end main
