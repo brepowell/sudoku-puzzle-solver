@@ -48,6 +48,8 @@ friend std::istream& operator>>(std::istream& input, Puzzle& puzzle);
 int get(int row, int col) const;
 
 
+int getFixedSquare(int row, int col) const;
+
 /** Check if the value exists within the row, column, or region
   If the location is safe to place a new value, 
   set the value contained inside a Square object

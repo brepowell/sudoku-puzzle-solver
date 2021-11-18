@@ -106,6 +106,7 @@ istream& operator>>(istream& input, Puzzle& puzzle){
 
       }//end inner for
    }//end outer for
+  puzzle.numEmptySquares_ = puzzle.puzzleSize_;
   return input;
 }//end istream operator overload
 
@@ -117,6 +118,10 @@ istream& operator>>(istream& input, Puzzle& puzzle){
 int Puzzle::get(int row, int col) const{
    return puzzleBoard_[row][col].getValue();
 }//end get
+
+int Puzzle::getFixedSquare(int row, int col) const{
+   return puzzleBoard_[row][col].getFixed();
+}
 
 /** Check if the value exists within the row, column, or region
   If the location is safe to place a new value, 
@@ -137,9 +142,8 @@ bool Puzzle::set(int row, int col, int newValue){
 
    //If the Square is being reset to 0, increase the number of empty squares
    else if (newValue == 0){
-      if (numEmpty() < (MAXSQUARES_ * MAXSQUARES_))
-         numEmptySquares_++; //This value should not increase beyond 81
       puzzleBoard_[row][col].setValue(0);
+      numEmptySquares_++;   
       return true;
    }
 
@@ -233,15 +237,14 @@ bool Puzzle::findEmpty(int &row, int &col){
   and all Squares will hold a value between 1 and 9
  @return  True if Sudoku is solved, or false if not.*/
 bool Puzzle::solve(int row, int col){
-
    //If there are no more empty squares, return true
    if (numEmpty() <= 0) 
       return true;
-   //find an empty Square
-   findEmpty(row, col); 
 
    //for each value from 1 through 9
    for (int newValue = 1; newValue <= 9; newValue++){
+   //find an empty Square
+   findEmpty(row, col); 
    //choose:
       if (set(row, col, newValue)){  //if value is legal, set square to it
          //explore:

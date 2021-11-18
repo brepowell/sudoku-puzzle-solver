@@ -16,28 +16,35 @@ int main(int argc, char const *argv[])
 //./test
 
    Puzzle sudoku;
-   //test the output operator overload to see the puzzle
-   cout << sudoku;
-
    //test the input operator overload to see if it takes input
    //423751968759683124168249357945362871872915436316478295537194682691827543284536019
-   cout << "Enter a valid Sudoku puzzle of 81 number characters (between 0 and 9): " <<endl;
+   //423751968759083124168249350945362871872910436316478295537194680691827543284536010
+   cout << "What is the puzzle size? " 
+        << sudoku.size() <<endl; //should return 81
+   cout << "How many squares are empty? " 
+        << sudoku.numEmpty() <<endl; //should return 81
+
+   cout << "Enter a valid Sudoku puzzle of 81 digits (between 0 and 9): " <<endl;
    cin >> sudoku;
    cout << sudoku;
 
-   //test findEmpty(0,0)
-   int row = 0;
-   int col = 0;
-   cout << "Is there an empty Square on the grid? " 
-        << sudoku.findEmpty(row,col)  <<endl; //should return true;
+   cout << "What is the puzzle size? " 
+        << sudoku.size() <<endl; //should return 6
+   cout << "How many squares are empty? " 
+        << sudoku.numEmpty() <<endl; //should return 0
+   cout << "Is row 8, column 8 fixed - true is 1? "
+        << sudoku.getFixedSquare(8,7) <<endl; //should return 1
+   cout << "Is row 8, column 6 fixed - false is 0? " 
+        << sudoku.getFixedSquare(8,6) <<endl; //should return 0 - works!
+   cout << "What value is in row 8, column 8? (the value is 9): " 
+        << sudoku.get(8,8) << endl; //should return 9
 
-/*   
    //test solve();
    if (sudoku.solve())
       cout << sudoku;
    else
       cout << "This puzzle cannot be solved" <<endl;
-*/
+
 
 /* TESTS PASSED:
 
@@ -84,6 +91,15 @@ int main(int argc, char const *argv[])
         << sudoku.isInRegion(0,0,5) <<endl; //should return true;
    cout << "Is the value 5 in the middle region? " 
         << sudoku.isInRegion(5,5,5)  <<endl; //should return false;
+
+   //test the output operator overload to see the puzzle
+   cout << sudoku;
+   
+   //test findEmpty(0,0)
+   int row = 0;
+   int col = 0;
+   cout << "Is there an empty Square on the grid? " 
+        << sudoku.findEmpty(row,col)  <<endl; //should return true;
 */
 
 }//end main
