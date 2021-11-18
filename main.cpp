@@ -25,11 +25,13 @@ int main(int argc, char const *argv[])
    cin >> sudoku;
    cout << sudoku;
 
-/*
    //test findEmpty(0,0)
+   int row = 0;
+   int col = 0;
    cout << "Is there an empty Square on the grid? " 
-        << sudoku.findEmpty(0,0)  <<endl; //should return true;
-   
+        << sudoku.findEmpty(row,col)  <<endl; //should return true;
+
+/*   
    //test solve();
    if (sudoku.solve())
       cout << sudoku;
