@@ -32,23 +32,20 @@ int numEmpty() const;
 
 /** Prints every square in the Sudoku puzzle
  @post This will print out the entire puzzle 
- @param This will take in a Puzzle object */
+ @param puzzle will take in a Puzzle object */
 friend std::ostream& operator<<(std::ostream& output, const Puzzle& puzzle);
 
 /** Read the input of the puzzle (81 integers)
  @post This will read all of the numbers from the input
- @param This will take in a Puzzle object */
+ @param puzzle will take in a Puzzle object */
 friend std::istream& operator>>(std::istream& input, Puzzle& puzzle);
 
 /** Return the value (0 - 9) contained inside a Square object
   Use the (row, column) location to find the object in the Puzzle array
   Look inside of the Square object by calling getValue().
- @param Takes in two integer arguments for a (row, column) location
+ @param row and col takes in two integer arguments for a (row, column) location
  @return The int value_ or -1 if the value is not set */
 int get(int row, int col) const;
-
-
-int getFixedSquare(int row, int col) const;
 
 /** Check if the value exists within the row, column, or region
   If the location is safe to place a new value, 
@@ -76,6 +73,9 @@ bool findEmpty(int &row, int &col);
  @return  True if Sudoku is solved, or false if not.*/
 bool solve(int row = 0, int col = 0);
 
+
+private:
+
 /** Check if the value exists already in the row
  @param int row, int the newValue
  @return  True if the value exists in the row, or false if not.*/
@@ -91,19 +91,20 @@ bool isInColumn(int col, int newValue) const;
  @return  True if the value exists in the column, or false if not.*/
 bool isInRegion(int row, int col, int newValue) const;
 
-private:
 //The maximum number of squares for each side of the board
 const int MAXSQUARES_ = 9;
 
-//The initial puzzle size (based on input from user)
+//The initial puzzle size should be 81,
+//this will decrease as new fixed Squares are added
 int puzzleSize_;
 
 //The current number of squares that are empty
+//this will decrease as new fixed Squares are added
+//this will also fluxuate as choices are made in solving
 int numEmptySquares_;
 
 //A 9x9 array that holds Square objects
 Square puzzleBoard_[9][9];
-
 
 };//end Puzzle class
 #endif

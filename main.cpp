@@ -17,14 +17,23 @@ int main(int argc, char const *argv[])
 
    Puzzle sudoku;
    //test the input operator overload to see if it takes input
-   //423751968759683124168249357945362871872915436316478295537194682691827543284536019
-   //423751968759083124168249350945362871872910436316478295537194680691827543284536010
+   /*
+   //4237519687596831241682493579453628718
+   72915436316478295537194682691827543284536019
+   //4237519687590831241682493509453628718
+   72910436316478295537194680691827543284536010
+   //4237519687590831241$682493509453628718
+   7291043631-6478295537194680691827543284536010
+   //4237519687590831241$688888888888888888
+   24935094536287187291043631-6478295537194680691827543284536010
+   */
    cout << "What is the puzzle size? " 
         << sudoku.size() <<endl; //should return 81
    cout << "How many squares are empty? " 
         << sudoku.numEmpty() <<endl; //should return 81
 
-   cout << "Enter a valid Sudoku puzzle of 81 digits (between 0 and 9): " <<endl;
+   cout << "Enter a valid Sudoku puzzle of 81 digits (between 0 and 9): " 
+        <<endl;
    cin >> sudoku;
    cout << sudoku;
 
@@ -32,12 +41,6 @@ int main(int argc, char const *argv[])
         << sudoku.size() <<endl; //should return 6
    cout << "How many squares are empty? " 
         << sudoku.numEmpty() <<endl; //should return 0
-   cout << "Is row 8, column 8 fixed - true is 1? "
-        << sudoku.getFixedSquare(8,7) <<endl; //should return 1
-   cout << "Is row 8, column 6 fixed - false is 0? " 
-        << sudoku.getFixedSquare(8,6) <<endl; //should return 0 - works!
-   cout << "What value is in row 8, column 8? (the value is 9): " 
-        << sudoku.get(8,8) << endl; //should return 9
 
    //test solve();
    if (sudoku.solve())
@@ -45,7 +48,10 @@ int main(int argc, char const *argv[])
    else
       cout << "This puzzle cannot be solved" <<endl;
 
-
+   //test get()
+   cout << "What value is in row 8, column 8? (the value is 9): " 
+        << sudoku.get(8,8) << endl; //should return 9
+        
 /* TESTS PASSED:
 
    Square s;
@@ -100,6 +106,13 @@ int main(int argc, char const *argv[])
    int col = 0;
    cout << "Is there an empty Square on the grid? " 
         << sudoku.findEmpty(row,col)  <<endl; //should return true;
+
+   //(This method was deleted after making sure it worked)
+   cout << "Is row 8, column 8 fixed - true is 1? "
+        << sudoku.getFixedSquare(8,7) <<endl; //should return 1
+   cout << "Is row 8, column 6 fixed - false is 0? " 
+        << sudoku.getFixedSquare(8,6) <<endl; //should return 0 - works!
+
 */
 
 }//end main
