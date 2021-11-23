@@ -10,26 +10,13 @@ using namespace std;
 
 int main(int argc, char const *argv[])
 {
-//test 
-//g++ *.cpp -std=c++11 -g -o test
-//./test
 
    Puzzle sudoku;
-   //test the input operator overload to see if it takes input
-   /*
-   //4237519687596831241682493579453628718
-   72915436316478295537194682691827543284536019
-   //4237519687590831241682493509453628718
-   72910436316478295537194680691827543284536010
-   //4237519687590831241$682493509453628718
-   7291043631-6478295537194680691827543284536010
-   //4237519687590831241$688888888888888888
-   24935094536287187291043631-6478295537194680691827543284536010
-   */
+
    cout << "What is the puzzle size? " 
         << sudoku.size() <<endl; //should return 81 (initial size)
    cout << "How many squares are empty? " 
-        << sudoku.numEmpty() <<endl; //should return 81
+        << sudoku.numEmpty() <<endl; //should return 81 (initial size)
 
    cout << "Enter a valid Sudoku puzzle of 81 digits (between 0 and 9): " 
         <<endl;

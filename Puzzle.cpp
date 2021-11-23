@@ -97,7 +97,9 @@ istream& operator>>(istream& input, Puzzle& puzzle)
                   //decrease the puzzle size as fixed values are added
                   puzzle.puzzleSize_--; 
                }//end inner if
-            }//end outer if
+            }else{
+               throw std::logic_error("This value has a conflict");
+            }
          }else{
              //if the character was not a digit, or cannot be added,
              //repeat the get() step for that column.
