@@ -10,13 +10,13 @@ using namespace std;
 
 /** Default Constructor
    This constructor will create a Sudoku puzzle board
+   puzzleSize decreases as fixed numbers are added
+   numEmptySquares decreases as fixed numbers are added
    that holds 9-by-9 Square objects.*/
 Puzzle::Puzzle() 
    :  puzzleSize_(9*9), 
    numEmptySquares_ (9*9)
 {
-   //puzzleSize decreases as fixed numbers are added
-   //numEmptySquares decreases as fixed numbers are added
 }//end default constructor
 
 /** Return the number of variable Squares in the puzzle
@@ -38,7 +38,8 @@ int Puzzle::numEmpty() const
 
 /** Prints every square in the Sudoku puzzle
  @post This will print out the entire puzzle 
- @param This will take in a Puzzle object */
+ @param output will take in an ostream 
+ @param puzzle will take in a Puzzle object */
 ostream& operator<<(ostream& output, const Puzzle& puzzle)
 {
    //loop through the entire puzzle
@@ -72,7 +73,8 @@ ostream& operator<<(ostream& output, const Puzzle& puzzle)
 
 /** Read the input of the puzzle (81 integers)
  @post This will read all of the numbers from the input
- @param This will take in a Puzzle object */
+ @param input will take in an istream 
+ @param puzzle will take in a Puzzle object */
 istream& operator>>(istream& input, Puzzle& puzzle)
 {
    char c; //for holding the input of each char
@@ -111,7 +113,8 @@ istream& operator>>(istream& input, Puzzle& puzzle)
 /** Return the value (0 - 9) contained inside a Square object
   Use the (row, column) location to find the object in the Puzzle array
   Look inside of the Square object by calling getValue().
- @param Takes in two integer arguments for a (row, column) location
+ @param row the row location of a Square in the Puzzle 2D array
+ @param col the column location of a Square in the Puzzle 2D array
  @return The int value_ or -1 if the value is not set */
 int Puzzle::get(int row, int col) const
 {
@@ -126,7 +129,9 @@ int Puzzle::get(int row, int col) const
   to the value given as a parameter.
   The number of empty squares will increase or decrease,
   depending on if the newValue is 0 or 1-9.
- @param int row, int column, int the newValue
+ @param row the row location of a Square in the Puzzle 2D array
+ @param col the column location of a Square in the Puzzle 2D array
+ @param newValue the value that will go into the Square
   that will go into the Square
  @return  True if set is successful, or false if not.*/
 bool Puzzle::set(int row, int col, int newValue)
@@ -154,33 +159,37 @@ bool Puzzle::set(int row, int col, int newValue)
 }//end set
 
 /** Check if the value exists already in the row
- @param int row, int the newValue
+ @param row the row location of a Square in the Puzzle 2D array
+ @param newValue the value that will go into the Square
  @return  True if the value exists in the row, or false if not.*/
 bool Puzzle::isInRow(int row, int newValue) const
 {
    for (int col = 0; col < MAXSQUARES_; col++){
       if (get(row, col) == newValue)
          return true;
-   }
+   }//end for
 
    return false;
 }//end isInRow
 
 /** Check if the value exists already in the column
- @param int column, int the newValue
+ @param col the column location of a Square in the Puzzle 2D array
+ @param newValue the value that will go into the Square
  @return  True if the value exists in the column, or false if not.*/
 bool Puzzle::isInColumn(int col, int newValue) const
 {
    for (int row = 0; row < MAXSQUARES_; row++){
       if (get(row, col) == newValue)
          return true;
-   }
+   }//end for
 
    return false;
 }//end isInColumn
 
 /** Check if the value exists already in the region
- @param int column, int the newValue
+ @param row the row location of a Square in the Puzzle 2D array
+ @param col the column location of a Square in the Puzzle 2D array
+ @param newValue the value that will go into the Square
  @return  True if the value exists in the column, or false if not.*/
 bool Puzzle::isInRegion(int row, int col, int newValue) const
 {
@@ -215,7 +224,8 @@ bool Puzzle::isInRegion(int row, int col, int newValue) const
 }//end isInRegion
 
 /** Check if there is a variable Square in that row.
- @param int row and col, passed by reference to be updated
+ @param row the row, passed by reference to be updated
+ @param col the column, passed by reference to be updated
  @return  True if a variable Square is found, or false if not.*/
 bool Puzzle::findEmpty(int &row, int &col)
 {
@@ -234,6 +244,8 @@ bool Puzzle::findEmpty(int &row, int &col)
  puzzle is filled in up to the current row and column
  @post  If successful, the Sudoku will be solved 
   and all Squares will hold a value between 1 and 9
+ @param row the row, initialized to 0
+ @param col the column, initialized to 0
  @return  True if Sudoku is solved, or false if not.*/
 bool Puzzle::solve(int row, int col)
 {
@@ -258,3 +270,63 @@ bool Puzzle::solve(int row, int col)
    
    return false;
 }//end solve
+
+
+//** Sudoku Square */
+
+/**Default constructor for Square
+ initializes value_ to 0 and fixed_ to false*/
+Puzzle::Square::Square()
+   : value_(0), fixed_(false)
+{
+}//end default constructor
+
+/** Return the value (0 - 9) contained inside a Square object
+ @return The int value_ or -1 if the value is not set */
+int Puzzle::Square::getValue() const
+{
+   if (value_ >= 0 && value_ <= 9){
+      return value_;
+   }else
+      return -1;
+}//end getValue
+
+/** Set the value contained inside a Square object
+ @post  If successful, the value within the Square object
+will be changed or set to the value given as a parameter
+ @param newValue the value that will go into the Square
+ @return  True if set is successful, or false if not.*/
+bool Puzzle::Square::setValue(int newValue)
+{
+   //Make sure that the Square is variable (not fixed) 
+   //and the value is valid
+   if (!getFixed() && newValue >= 0 && newValue <= 9){
+      value_ = newValue;
+      return true;
+   }else{
+      return false;
+   }//end else
+}//end setValue
+
+/** Return whether or not the value is fixed or variable
+  within the Square object
+ @return The bool contained by fixed_*/
+bool Puzzle::Square::getFixed() const
+{
+   return fixed_;
+}//end getFixed
+
+/** Set the value contained inside a Square object
+ @post  If successful, the Square object will either be
+ set as fixed (true) or variable (false)
+ @param isFixed bool that is true if the value is fixed, 
+ false if the value is variable
+ @return  True if set is successful, or false if not.*/
+bool Puzzle::Square::setFixed(bool isFixed)
+{
+   if (isFixed){
+      fixed_ = true;
+   }else
+      fixed_= false;
+   return fixed_;
+}//end setFixed
