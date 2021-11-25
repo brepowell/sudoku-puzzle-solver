@@ -15,7 +15,8 @@ using namespace std;
    that holds 9-by-9 Square objects.*/
 Puzzle::Puzzle() 
    :  puzzleSize_(9*9), 
-   numEmptySquares_ (9*9)
+   numEmptySquares_ (9*9),
+   exceptionFound_(false)
 {
 }//end default constructor
 
@@ -67,8 +68,9 @@ ostream& operator<<(ostream& output, const Puzzle& puzzle)
       }
       output << endl;
    }//end outer for loop
-   return output;
 
+   output << endl;
+   return output;
 }//end ostream overload
 
 /** Read the input of the puzzle (81 integers)
@@ -79,34 +81,44 @@ istream& operator>>(istream& input, Puzzle& puzzle)
 {
    char c; //for holding the input of each char
    int newValue; //for converting to an int and setting the value
-
-   for (int row = 0; row < puzzle.MAXSQUARES_; row++){
-      for (int col = 0; col < puzzle.MAXSQUARES_; col++){
-         //take in an input, using the istream get() method
-         input.get(c);  //store it in ‘c’ variable
-
-         //check if the char is a digit
-         if(isdigit(c)){
-            newValue = c - '0'; //cast the char into an int
             
-            //set will check there are no conflicts as the value is added
-            if(puzzle.set(row, col, newValue)){
-               if (newValue != 0){
-                  //These are the fixed squares for the puzzle
-                  puzzle.puzzleBoard_[row][col].setFixed(true);
-                  //decrease the puzzle size as fixed values are added
-                  puzzle.puzzleSize_--; 
-               }//end inner if
+   try
+   {   
+      for (int row = 0; row < puzzle.MAXSQUARES_; row++){
+         for (int col = 0; col < puzzle.MAXSQUARES_; col++){
+   
+            //take in an input, using the istream get() method
+            input.get(c);  //store it in ‘c’ variable
+
+            //check if the char is a digit
+            if(isdigit(c)){
+               newValue = c - '0'; //cast the char into an int
+
+               //set will check there are no conflicts as the value is added
+               if(puzzle.set(row, col, newValue)){
+                  if (newValue != 0){
+                     //These are the fixed squares for the puzzle
+                     puzzle.puzzleBoard_[row][col].setFixed(true);
+                     //decrease the puzzle size as fixed values are added
+                     puzzle.puzzleSize_--; 
+                  }//end inner if
+               }else{
+                  puzzle.exceptionFound_ = true;
+                  throw std::logic_error("Error: This puzzle is not legal");
+                  return input;
+               }
             }else{
-               throw std::logic_error("This value has a conflict");
-            }
-         }else{
-             //if the character was not a digit, or cannot be added,
-             //repeat the get() step for that column.
-             col--;
-         }//end else
-      }//end inner for
-   }//end outer for
+               //if the character was not a digit, or cannot be added,
+               //repeat the get() step for that column.
+               col--;
+            }//end else
+         }//end inner for
+      }//end outer for
+   }//end try
+   catch(std::logic_error logErr)
+   {
+      std::cout << logErr.what() << std::endl;  // Display error message      
+   }
 
   puzzle.numEmptySquares_ = puzzle.puzzleSize_;
   return input;
@@ -251,6 +263,10 @@ bool Puzzle::findEmpty(int &row, int &col)
  @return  True if Sudoku is solved, or false if not.*/
 bool Puzzle::solve(int row, int col)
 {
+   //If the input operator found an exception, return false
+   if (exceptionFound_ == true)
+      return false;
+
    //If there are no more empty squares, return true
    if (numEmpty() <= 0) 
       return true;

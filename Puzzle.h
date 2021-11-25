@@ -156,6 +156,12 @@ int puzzleSize_;
 //this will also fluxuate as choices are made in solving
 int numEmptySquares_;
 
+//Helps with exceptions
+//will change to false if the puzzle catches an exception
+//within the istream operator overload
+//then the solve function will return false
+bool exceptionFound_;
+
 //A 9x9 array that holds Square objects
 Square puzzleBoard_[9][9];
 
